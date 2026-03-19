@@ -15,7 +15,7 @@ Este proyecto es un **Monolito Modular** (un solo despliegue) con **separación 
   - `contracts`: eventos compartidos entre módulos (contratos)
   - `http`: servidor HTTP simple
 
-### Comunicación por eventos (ejemplo)
+### Comunicacion por eventos (ejemplo)
 
 - `orders` publica `OrderPlacedEvent`
 - `inventory` escucha `OrderPlacedEvent` y responde con:
