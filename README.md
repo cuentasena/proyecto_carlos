@@ -1,6 +1,6 @@
 ## Monolito Modular (Java) – Boilerplate
 
-Este proyecto es un **Monolito Modular** (un solo despliegue) con **separación por modulos** y comunicación **desacoplada** por un **Event Bus interno**.
+Este proyecto es un **Monolito Modular** (un solo despliegue) con **separacion por modulos** y comunicación **desacoplada** por un **Event Bus interno**.
 
 ### Estructura (modulos)
 
