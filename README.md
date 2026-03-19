@@ -4,7 +4,7 @@ Este proyecto es un **Monolito Modular** (un solo despliegue) con **separación 
 
 ### Estructura (módulos)
 
-- `src/main/java/com/proyectocarlos/store/modules/catalog` (Catálogo)
+- `src/main/java/com/proyectocarlos/store/modules/catalog` (Catalogo)
   - Controller / Service / Repository (in-memory)
 - `src/main/java/com/proyectocarlos/store/modules/inventory` (Inventario)
   - Controller / Service / Repository (in-memory)
@@ -36,7 +36,7 @@ mvn -q exec:java
 
 Arranca en `http://localhost:8080`.
 
-### Prueba rápida (PowerShell)
+### Prueba rapida (PowerShell)
 
 Crear producto (sirve como “ítem de cafetería” o “libro”):
 
