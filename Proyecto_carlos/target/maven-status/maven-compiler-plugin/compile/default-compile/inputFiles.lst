@@ -1,0 +1,14 @@
+C:\Users\Aprendiz\Downloads\Proyecto_carlos\src\main\java\com\proyectocarlos\store\App.java
+C:\Users\Aprendiz\Downloads\Proyecto_carlos\src\main\java\com\proyectocarlos\store\modules\catalog\CatalogModule.java
+C:\Users\Aprendiz\Downloads\Proyecto_carlos\src\main\java\com\proyectocarlos\store\modules\inventory\InventoryModule.java
+C:\Users\Aprendiz\Downloads\Proyecto_carlos\src\main\java\com\proyectocarlos\store\modules\orders\OrdersModule.java
+C:\Users\Aprendiz\Downloads\Proyecto_carlos\src\main\java\com\proyectocarlos\store\shared\contracts\OrderPlacedEvent.java
+C:\Users\Aprendiz\Downloads\Proyecto_carlos\src\main\java\com\proyectocarlos\store\shared\contracts\StockRejectedEvent.java
+C:\Users\Aprendiz\Downloads\Proyecto_carlos\src\main\java\com\proyectocarlos\store\shared\contracts\StockReservedEvent.java
+C:\Users\Aprendiz\Downloads\Proyecto_carlos\src\main\java\com\proyectocarlos\store\shared\events\DomainEvent.java
+C:\Users\Aprendiz\Downloads\Proyecto_carlos\src\main\java\com\proyectocarlos\store\shared\events\EventBus.java
+C:\Users\Aprendiz\Downloads\Proyecto_carlos\src\main\java\com\proyectocarlos\store\shared\events\EventHandler.java
+C:\Users\Aprendiz\Downloads\Proyecto_carlos\src\main\java\com\proyectocarlos\store\shared\events\SimpleEventBus.java
+C:\Users\Aprendiz\Downloads\Proyecto_carlos\src\main\java\com\proyectocarlos\store\shared\http\HttpError.java
+C:\Users\Aprendiz\Downloads\Proyecto_carlos\src\main\java\com\proyectocarlos\store\shared\http\Router.java
+C:\Users\Aprendiz\Downloads\Proyecto_carlos\src\main\java\com\proyectocarlos\store\shared\http\SimpleHttpServer.java

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Tienda (básico)</title>
+</head>
+<body>
+
+<h1>Tienda</h1>
+<p>Puedes usarla de dos formas: (1) abrir este archivo con doble clic desde el Explorador de archivos y tener el servidor Java en marcha; (2) con el servidor arrancado, ir a <a id="link-local" href="http://localhost:8080/">http://localhost:8080/</a>.</p>
+<p id="server-status">Comprobando si hay servidor en el puerto 8080…</p>
+
+<h2>Catálogo</h2>
+<button type="button" id="btn-catalog-list">Listar productos</button>
+<form id="form-catalog-create">
+  <p>
+    <label>Nombre <input name="name" required></label>
+    <label>Marca <input name="brand" required></label>
+    <label>Precio <input name="price" type="text" inputmode="decimal" placeholder="22.59 o 22,59" required></label>
+    <button type="submit">Crear producto</button>
+  </p>
+</form>
+
+<h2>Inventario</h2>
+<button type="button" id="btn-stock-list">Listar stock</button>
+<form id="form-stock-add">
+  <p>
+    <label>ID producto <input name="productId" required></label>
+    <label>Cantidad <input name="quantity" type="number" min="1" required></label>
+    <button type="submit">Añadir stock</button>
+  </p>
+</form>
+
+<h2>Pedidos</h2>
+<button type="button" id="btn-orders-list">Listar pedidos</button>
+<form id="form-order-create">
+  <p>
+    <label>ID producto <input name="productId" required></label>
+    <label>Cantidad <input name="quantity" type="number" min="1" required></label>
+    <button type="submit">Crear pedido (1 línea)</button>
+  </p>
+</form>
+
+<h2>Salida</h2>
+<pre id="out"></pre>
+
+<script>
+(function () {
+  var out = document.getElementById('out');
+  var statusEl = document.getElementById('server-status');
+  var API_BASE = (window.location.protocol === 'file:') ? 'http://localhost:8080' : '';
+
+  function show(data) {
+    out.textContent = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
+  }
+
+  function showNetworkError(err) {
+    var hint = '\n\n¿El servidor Java está arrancado? En la carpeta del proyecto ejecuta run.bat, o desde el IDE ejecuta la clase App.\nTiene que quedar escuchando en http://localhost:8080 antes de pulsar los botones.';
+    var msg = String(err);
+    if (msg.indexOf('Failed to fetch') !== -1) {
+      show('No hay conexión con ' + (API_BASE || window.location.origin) + '.' + hint);
+    } else {
+      show(msg);
+    }
+  }
+
+  function parsePrice(raw) {
+    var s = String(raw || '').trim().replace(',', '.');
+    var n = Number(s);
+    return isFinite(n) ? n : NaN;
+  }
+
+  async function api(method, path, body) {
+    var opts = { method: method, headers: {} };
+    if (body !== undefined) {
+      opts.headers['Content-Type'] = 'application/json';
+      opts.body = JSON.stringify(body);
+    }
+    var url = API_BASE + path;
+    var res = await fetch(url, opts);
+    var text = await res.text();
+    var parsed;
+    try { parsed = JSON.parse(text); } catch (e) { parsed = text; }
+    if (!res.ok) {
+      var msg = (parsed && parsed.message) ? parsed.message : text;
+      throw new Error(res.status + ' ' + msg);
+    }
+    return parsed;
+  }
+
+  fetch(API_BASE + '/catalog/products', { method: 'GET' })
+    .then(function () {
+      statusEl.textContent = 'Servidor: conectado (puerto 8080). Ya puedes usar los botones.';
+    })
+    .catch(function () {
+      statusEl.textContent = 'Servidor: no responde en http://localhost:8080. Arranca primero App.java o run.bat; si ya lo hiciste, revisa firewall o que ningún otro programa use el puerto 8080.';
+    });
+
+  document.getElementById('btn-catalog-list').onclick = function () {
+    api('GET', '/catalog/products').then(show).catch(showNetworkError);
+  };
+
+  document.getElementById('form-catalog-create').onsubmit = function (ev) {
+    ev.preventDefault();
+    var f = ev.target;
+    var p = parsePrice(f.price.value);
+    if (!isFinite(p) || p < 0) {
+      show('Precio no válido. Usa por ejemplo 22.59 o 22,59');
+      return;
+    }
+    var body = {
+      name: f.name.value,
+      brand: f.brand.value,
+      price: p
+    };
+    api('POST', '/catalog/products', body).then(show).catch(showNetworkError);
+  };
+
+  document.getElementById('btn-stock-list').onclick = function () {
+    api('GET', '/inventory/stock').then(show).catch(showNetworkError);
+  };
+
+  document.getElementById('form-stock-add').onsubmit = function (ev) {
+    ev.preventDefault();
+    var f = ev.target;
+    var body = { productId: f.productId.value, quantity: Number(f.quantity.value) };
+    api('POST', '/inventory/stock/add', body).then(show).catch(showNetworkError);
+  };
+
+  document.getElementById('btn-orders-list').onclick = function () {
+    api('GET', '/orders').then(show).catch(showNetworkError);
+  };
+
+  document.getElementById('form-order-create').onsubmit = function (ev) {
+    ev.preventDefault();
+    var f = ev.target;
+    var body = {
+      items: [{ productId: f.productId.value, quantity: Number(f.quantity.value) }]
+    };
+    api('POST', '/orders', body).then(show).catch(showNetworkError);
+  };
+})();
+</script>
+
+</body>
+</html>
